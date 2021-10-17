@@ -1,0 +1,33 @@
+.header {
+  margin-bottom: 10px;
+}
+.header__logo-link {
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.header__logo-link:hover {
+  text-decoration: none;
+}
+.header__title {
+  font-size: 32px;
+  font-weight: 600;
+  color:#7e72f2;
+}
+.header__image {
+  width: 65px;
+}
+@media screen and (min-width: 720px) {
+  .header {
+    margin-bottom: 20px;
+  }
+  .header__title {
+    font-size: 48px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .header {
+    margin-bottom: 28px;
+  }
+}
