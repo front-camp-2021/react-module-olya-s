@@ -1,10 +1,49 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+* {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 300;
+  color: #2C2C2C;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 300;
+  color: #2C2C2C;
+  background: #f9f9f9;
+  padding: 5px;
+}
+p, ul, h1, h2, h4 {
+  margin: 0;
+  padding: 0;  
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+.visually-hidden {
+  visibility: hidden;
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -34,5 +73,32 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 320px) {
+  body {
+    padding: 10px;
+  }
+  .main-container {
+    grid-gap: 15px;
+  }
+}
+@media screen and (min-width: 720px) {
+  body {
+    padding: 20px;
+  }
+  .main-container{
+    grid-gap: 20px;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+@media screen and (min-width: 720px) {
+  body {
+    padding: 20px;
+  }
+  .main-container{
+    grid-gap: 20px;
+    grid-template-columns: 1fr 2fr;
   }
 }
