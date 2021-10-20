@@ -1,67 +1,25 @@
-import './style.css';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import DoubleSlider from '../DoubleSlider';
 import FiltersList from '../FiltersList';
-
-const categoryFilterConfig = [
-  {
-    value: 'category=cell_phones',
-    title: 'Cell Phones',
-  },
-  {
-    value: 'category=computer_tablets',
-    title: 'Computers & Tablets',
-  },
-  {
-    value: 'category=cell_phones_accessories',
-    title: 'Cell Phone Accessories',
-  },
-  {
-    value: 'category=appliances',
-    title: 'Appliances',
-  },
-  {
-    value: 'category=audio',
-    title: 'Audio',
-  }
-];
-
-const brandFilterConfig = [
-  {
-    value: 'brand=insigni',
-    title: 'Insigni',
-  },
-  {
-    value: 'brand=samsung',
-    title: 'Samsung',
-  },
-  {
-    value: 'brand=apple',
-    title: 'Apple',
-  }
-];
+import { selectFilters } from '../../features/filters/selectors';
+import { actionChangeFilter, actionResetAllFilters } from '../../features/filters/actions';
+import './style.css';
 
 const FilterContainer = () => {
-  const filtersNames = [...categoryFilterConfig, ...brandFilterConfig]
-    .map(filter => (filter.value.split('=')[1]));
-  const allFilters = filtersNames.reduce((acc, cur) => {
-    acc[cur] = false;
-    return acc;
-  }, {});
-  const [filters, setFilters] = useState(allFilters);
+  const filters = useSelector(selectFilters).filters;
+  const dispatch = useDispatch();
+
+  const categoryFilter = filters.filter(filt => filt.value.split('=')[0] === 'category');
+  const brandFilter = filters.filter(filt => filt.value.split('=')[0] === 'brand');
 
   const onSubmit = (event) => {
     event.preventDefault();
   }
   const clearAllFilters = () => {
-    setFilters(allFilters);
+    dispatch(actionResetAllFilters());
   }
   const changeFilters = event => {
-    const name = event.target.name;
-    setFilters(prev => ({
-      ...prev,
-      [name]: event.target.checked
-    }));
+    dispatch(actionChangeFilter(event.target.name));
   }
 
   return (
@@ -75,13 +33,13 @@ const FilterContainer = () => {
           <hr />
           <FiltersList
             title="Category"
-            filtersList={categoryFilterConfig}
+            filtersList={categoryFilter}
             changeFilters={changeFilters}
             filters={filters} />
           <hr />
           <FiltersList
             title="Brand"
-            filtersList={brandFilterConfig}
+            filtersList={brandFilter}
             changeFilters={changeFilters}
             filters={filters} />
         </div>

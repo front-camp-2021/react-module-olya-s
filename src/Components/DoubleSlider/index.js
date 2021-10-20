@@ -1,17 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { actionChangeRange } from '../../features/filters/actions';
 import './style.css';
 
 class DoubleSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      min: 100,
-      max: 200,
-      title: 'Price',
-      selected: {
-        from: 150,
-        to: 175
-      },
+      ...props.range,
       className: 'range-slider',
       slider: null,
       shiftX: 0,
@@ -32,6 +28,7 @@ class DoubleSlider extends React.Component {
     if (element.className === 'range-slider__thumb-left' ||
       element.className === 'range-slider__thumb-right') {
       this.setState((state) => ({
+        ...state,
         className: 'range-slider range-slider_dragging',
         slider: element,
         outLeftX: this.progress.current.getBoundingClientRect().left,
@@ -42,15 +39,15 @@ class DoubleSlider extends React.Component {
 
       if (element.className === 'range-slider__thumb-left') {
         this.setState((state) => (
-          { shiftX: event.pageX - element.getBoundingClientRect().right }
+          { ...state, shiftX: event.pageX - element.getBoundingClientRect().right }
         ));
       } else {
         this.setState((state) => (
-          { shiftX: event.pageX - element.getBoundingClientRect().left }
+          { ...state, shiftX: event.pageX - element.getBoundingClientRect().left }
         ));
       }
       element.style.zIndex = 1000;
-      this.setState((state) => ({ move: this.handlePointerMove }));
+      this.setState((state) => ({ ...state, move: this.handlePointerMove }));
     }
   };
 
@@ -63,6 +60,7 @@ class DoubleSlider extends React.Component {
         posX = this.state.thumbRightX;
       }
       this.setState((state) => ({
+        ...state,
         selected: {
           ...this.state.selected,
           from: (this.state.min +
@@ -79,6 +77,7 @@ class DoubleSlider extends React.Component {
         posX = this.state.outRightX;
       }
       this.setState((state) => ({
+        ...state,
         selected: {
           ...this.state.selected,
           to: this.state.max -
@@ -90,29 +89,14 @@ class DoubleSlider extends React.Component {
   }
 
   handlePointerUp = (event) => {
-    this.setState((state) => ({ className: 'range-slider' }));
+    this.setState((state) => ({ ...state, className: 'range-slider' }));
     this.setState((state) => ({
+      ...state,
       slider: null,
       move: null
     }));
 
-    // const left = parseInt(this.progress.current.style.left.match(/\d+/));
-    // const right = parseInt(this.progress.current.style.right.match(/\d+/));
-    // const range = this.state.max - this.state.min;
-    // const from = this.state.min + left * range / 100;
-    // const to = this.state.max - right * range / 100;
-    // this.setState((state) => ({ selected: { from: from, to: to } }));
-    // console.log(from, to, this.state.selected.from, this.state.selected.to)
-
-    // this.element.dispatchEvent(new CustomEvent('range-selected',
-    //   {
-    //     bubbles: true,
-    //     detail: {
-    //       filterName: this.filterName,
-    //       value: { from, to }
-    //     }
-    //   })
-    // );
+    this.props.actionChangeRange(this.state.selected)
   };
 
   onDragStart = () => {
@@ -124,12 +108,35 @@ class DoubleSlider extends React.Component {
     return Math.floor(value * 100 / sliderWidth);
   }
 
-  formatValue = value => value
+  formatValue = value => value;
+
+  setRange() {
+    console.log("set")
+    const selected = this.props.range.selected;
+    !this.state.move && this.setState(state => ({
+      ...state, range: {
+        ...state.range,
+        selected: {
+          from: selected.from,
+          to: selected.to
+        }
+      }
+    }))
+  }
+  componentDidUpdate() {
+    if (!this.state.move) {
+      if (this.props.range.selected !== this.state.selected) {
+        this.setState(state => ({ ...state, selected: this.props.range.selected }));
+      }
+    }
+  }
 
   render() {
-    const left = (this.state.selected.from - this.state.min) * 100 /
+    const from = this.state.selected.from;
+    const to = this.state.selected.to;
+    const left = (from - this.state.min) * 100 /
       (this.state.max - this.state.min) + '%';
-    const right = (this.state.max - this.state.selected.to) * 100 /
+    const right = (this.state.max - to) * 100 /
       (this.state.max - this.state.min) + '%';
     return (
       <fieldset
@@ -138,7 +145,7 @@ class DoubleSlider extends React.Component {
         onPointerMove={this.state.move}>
         <legend className="filters__group">{this.state.title}</legend>
         <div className={this.state.className} data-element="rangeSlider">
-          <span data-element="from">{this.state.selected.from}</span>
+          <span data-element="from">{from}</span>
           <div ref={this.progress}
             className="range-slider__inner">
             <span className="range-slider__progress"
@@ -160,11 +167,19 @@ class DoubleSlider extends React.Component {
               </svg>
             </span>
           </div>
-          <span data-element="to">{this.state.selected.to}</span>
+          <span data-element="to">{to}</span>
         </div>
       </fieldset>
     )
   }
 }
 
-export default DoubleSlider;
+const mapStateToProps = state => ({
+  range: state.filters.range
+})
+
+const mapDispatchToProps = dispatch => ({
+  actionChangeRange: payload => dispatch(actionChangeRange(payload))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DoubleSlider);

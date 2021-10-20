@@ -1,28 +1,20 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionChangePage } from '../../features/pages/actions';
+import { selectedPages } from '../../features/pages/selectors';
 import './style.css';
 
-const props = {
-  totalPages: 20,
-  start: 1,
-  currentPage: 1,
-  viewPages: 9
-}
-
 const Pagination = () => {
-  const { totalPages, start, viewPages } = props;
-  const [currentPage, setCurrentPage] = useState(props.currentPage);
+  const { totalPages, start, viewPages, currentPage } = useSelector(selectedPages);
+  const dispatch = useDispatch();
   const handlePointerDown = event => {
     if (event.target.classList.contains('pagination__link')) {
       if (event.target.parentElement.dataset.element === 'prevPage') {
-        const newPageIndex = currentPage - 1;
-        setCurrentPage(newPageIndex);
+        dispatch(actionChangePage(currentPage - 1));
       } else if (event.target.parentElement.dataset.element === 'nextPage') {
-        const newPageIndex = currentPage + 1;
-        setCurrentPage(newPageIndex);
+        dispatch(actionChangePage(currentPage + 1));
       }
       if (event.target.className === 'pagination__link') {
-        const newPageIndex = +event.target.dataset.index;
-        setCurrentPage(newPageIndex);
+        dispatch(actionChangePage(+event.target.dataset.index));
       }
     }
   }

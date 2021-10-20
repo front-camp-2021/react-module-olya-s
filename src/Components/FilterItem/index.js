@@ -1,7 +1,6 @@
 const FilterItem = (props) => {
   const { filter, changeFilters } = props;
-  const value = filter.value.split('=')[1];
-  const title = filter.title;
+  const { value, title, checked } = filter;
   const handleChange = event => {
     changeFilters(event);
   }
@@ -12,7 +11,7 @@ const FilterItem = (props) => {
         id={value}
         name={value}
         onChange={handleChange}
-        checked={props.filters && props.filters[value]}
+        checked={checked}
       />
       <label htmlFor={value}>{title}</label>
     </div>
