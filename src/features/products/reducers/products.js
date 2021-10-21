@@ -1,8 +1,9 @@
 import {
   CHANGE_WISHLIST_STATUS,
   ADD_TO_CART,
+  REMOVE_FROM_CART,
   CLEAR_WISHLIST,
-  CLEAR_CART
+  CLEAR_CART,
 } from "../actions";
 
 const productsInitialState = [
@@ -88,6 +89,11 @@ export function products(state = productsInitialState, action) {
       return state.map(product =>
         product.id === action.payload
           ? { ...product, quantity: product.quantity + 1 }
+          : product);
+    case REMOVE_FROM_CART:
+      return state.map(product =>
+        product.id === action.payload
+          ? { ...product, quantity: 0 }
           : product);
     case CLEAR_WISHLIST:
       return state.map(product => ({ ...product, inWishlist: false }));

@@ -25,6 +25,14 @@ function actionClearCart() {
 }
 
 export {
-  CHANGE_WISHLIST_STATUS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_WISHLIST, CLEAR_CART,
-  actionChangeWishlistStatus, actionAddToCart, actionRemoveFromCart, actionClearWishlist, actionClearCart
+  CHANGE_WISHLIST_STATUS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_WISHLIST,
+  CLEAR_CART,
+  actionChangeWishlistStatus,
+  actionAddToCart,
+  actionRemoveFromCart,
+  actionClearWishlist,
+  actionClearCart
 };

@@ -13,7 +13,7 @@ const Card = props => {
     dispatch(actionAddToCart(id));
   }
   return (
-    <div className="catalog__item card">
+    <div className="card">
       <div className="card__image">
         <img src={images && images[0]} alt="product" />
       </div>
@@ -30,14 +30,14 @@ const Card = props => {
       <div className="card__footer">
         <button className="card__button card__button_wishlist" onClick={addToWishlist}>
           {inWishlist
-            ? <img src="images/heart_2.svg" alt="heart icon" />
-            : <img src="images/heart.svg" alt="heart icon" />
+            ? <img src="images/heart_2.svg" alt="in wishlist" />
+            : <img src="images/heart.svg" alt="add to wishlist" />
           }
           Wishlist
         </button>
         <button className="card__button card__button_cart" onClick={addToCart}>
-          <img src="images/shopping-bag.svg" alt="cart icon" />
-          {!quantity ? 'Add to cart' : `Already in cart (${quantity})`}
+          <img src="images/shopping-bag.svg" alt="add to cart" />
+          {!quantity ? 'Add to cart' : `In cart (${quantity})`}
         </button>
       </div>
     </div >

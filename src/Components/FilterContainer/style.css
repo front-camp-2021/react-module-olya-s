@@ -25,6 +25,10 @@
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.14);
   }
+  .filter-form__submit-button:hover {
+    cursor: pointer;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
+  }
   .filter-form__list-wrapper {
     flex-grow: 1;
     max-width: 560px;
@@ -74,20 +78,6 @@
   }
   .filters__option input:checked + label::before {
     background: #6f64f8;
-  }
-  .filter-form__clear-button {
-    width: 100%;
-    padding: 17px;
-    text-transform: uppercase;
-    color: #fff;
-    background: #6f64f8;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.14);
-  }
-  .filter-form__clear-button:hover {
-    cursor: pointer;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);     
   }
 }
 @media screen and (min-width: 1200px) {

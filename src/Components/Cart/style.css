@@ -1,0 +1,23 @@
+.button-wrapper {
+  width: 100%;
+  min-width: 310px;
+  max-width: 630px;
+  margin: 20px 0 20px;
+}
+.cart {
+  display: grid;
+  width: 100%;
+  grid-gap: 15px;
+}
+
+@media screen and (min-width: 635px) {
+  .button-wrapper {
+    width: calc(50% - 7px);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .button-wrapper {
+    width: 30%;
+  }
+}

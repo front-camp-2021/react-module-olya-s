@@ -2,22 +2,6 @@
   position: relative;
   margin-bottom: 15px;
 }
-.search__results {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.search__results p {
-  margin: 0;
-}
-.search__button-like {
-  width: 45px;
-  height: 40px;
-  border-radius: 8px;
-  border: none;
-  background: #6f64f8;
-  align-self: baseline;
-}
 .search__input {
   width: 100%;
   margin-top: 15px;

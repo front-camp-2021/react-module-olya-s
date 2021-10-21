@@ -4,6 +4,7 @@ import FiltersList from '../FiltersList';
 import { selectFilters } from '../../features/filters/selectors';
 import { actionChangeFilter, actionResetAllFilters } from '../../features/filters/actions';
 import './style.css';
+import ClearButton from '../ClearButton';
 
 const FilterContainer = () => {
   const filters = useSelector(selectFilters).filters;
@@ -44,10 +45,9 @@ const FilterContainer = () => {
             filters={filters} />
         </div>
       </div>
-      <button
-        className="filter-form__clear-button"
-        data-element="button"
-        onClick={clearAllFilters}>Clear all filters</button>
+      <ClearButton onClick={clearAllFilters}>
+        Clear all filters
+      </ClearButton>
     </form>
   )
 }

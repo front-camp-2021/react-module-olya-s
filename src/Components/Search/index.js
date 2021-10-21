@@ -17,12 +17,6 @@ const Search = (props, ref) => {
 
   return (
     <form className="search" onSubmit={onSubmit}>
-      <div className="search__results">
-        <p>7,618 results found</p>
-        <button className="search__button-like">
-          <img src="images/like.svg" alt="heart icon" />
-        </button>
-      </div>
       <label htmlFor="search-input" hidden>Search</label>
       <input value={value} onChange={onChange} onInput={props.debouncedOnInput}
         className="search__input" id="search-input" type="text" placeholder="Search" />

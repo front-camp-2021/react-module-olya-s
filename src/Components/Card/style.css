@@ -79,9 +79,6 @@
   color: #fff;
   border-bottom-right-radius: 8px;
 }
-.card__button_cart:hover {
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
-}
 .card__button_cart img {
   margin-right: 12px;
 }
