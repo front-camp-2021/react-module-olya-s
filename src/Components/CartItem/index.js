@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { actionRemoveFromCart } from '../../features/products/actions';
+import { actionRemoveFromCart, actionAddToCart } from '../../features/products/actions';
 import './style.css';
 
 const CartItem = props => {
@@ -9,13 +9,13 @@ const CartItem = props => {
   const dispatch = useDispatch();
 
   const minusOne = () => {
+    dispatch(actionRemoveFromCart(id));
     setQuantity(quantity - 1);
     props.countTotalPrice(-price);
-    if (quantity === 1) {
-      dispatch(actionRemoveFromCart(id));
-    }
   }
+
   const plusOne = () => {
+    dispatch(actionAddToCart(id));
     setQuantity(quantity + 1);
     props.countTotalPrice(price);
   }

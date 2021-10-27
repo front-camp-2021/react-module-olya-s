@@ -1,19 +1,20 @@
 const FilterItem = (props) => {
-  const { filter, changeFilters } = props;
-  const { value, title, checked } = filter;
+  const { title, checked } = props.filter;
+
   const handleChange = event => {
-    changeFilters(event);
+    props.changeFilter(event);
   }
+
   return (
     <div>
       <input
         type="checkbox"
-        id={value}
-        name={value}
+        id={title}
+        name={title}
         onChange={handleChange}
         checked={checked}
       />
-      <label htmlFor={value}>{title}</label>
+      <label htmlFor={title}>{title}</label>
     </div>
   )
 }

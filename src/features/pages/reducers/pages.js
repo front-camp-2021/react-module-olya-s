@@ -1,7 +1,7 @@
-import { CHANGE_PAGE } from '../actions';
+import { SET_TOTAL_PAGES, CHANGE_PAGE } from '../actions';
 
 const pagesInitialState = {
-  totalPages: 20,
+  totalPages: 0,
   start: 1,
   currentPage: 1,
   viewPages: 9
@@ -9,6 +9,8 @@ const pagesInitialState = {
 
 export const pages = (state = pagesInitialState, action) => {
   switch (action.type) {
+    case SET_TOTAL_PAGES:
+      return { ...state, totalPages: action.payload };
     case CHANGE_PAGE:
       return { ...state, currentPage: action.payload };
     default:

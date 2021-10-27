@@ -13,6 +13,7 @@ const Search = (props, ref) => {
     event.preventDefault();
     dispatch(actionChangeSearch(value.trim()));
     setValue('');
+    console.log("submit", value)
   }
 
   return (

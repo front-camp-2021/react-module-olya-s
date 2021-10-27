@@ -1,11 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionChangePage } from '../../features/pages/actions';
 import { selectedPages } from '../../features/pages/selectors';
 import './style.css';
 
 const Pagination = () => {
-  const { totalPages, start, viewPages, currentPage } = useSelector(selectedPages);
   const dispatch = useDispatch();
+  const { totalPages, start, viewPages, currentPage } = useSelector(selectedPages);
+
   const handlePointerDown = event => {
     if (event.target.classList.contains('pagination__link')) {
       if (event.target.parentElement.dataset.element === 'prevPage') {
@@ -21,6 +22,26 @@ const Pagination = () => {
 
   const getPages = () => {
     const pages = [];
+    if (totalPages < 9) {
+      for (let i = 1; i <= totalPages; i++) {
+        if (currentPage === i) {
+          pages[i] = <li key={i}
+            className="pagination__item pagination__item_current"
+            data-index={i}>{i}
+          </li>;
+        } else {
+          pages[i] = <li
+            key={i}
+            className="pagination__item">
+            <button
+              className="pagination__link"
+              data-index={i}>{i}
+            </button>
+          </li>;
+        }
+      }
+      return pages;
+    }
     if (currentPage < start + 5) {
       for (let i = start; i < viewPages - 1; i++) {
         if (currentPage === i) {

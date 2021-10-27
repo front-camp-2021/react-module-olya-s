@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { selectWishfulProductsCount } from '../../features/products/selectors';
+import { actionChangeSearch } from '../../features/filters/actions';
 import Search from '../Search';
 import Card from '../Card';
-import { selectProducts, selectWishfulProductsCount } from '../../features/products/selectors';
-import { actionChangeSearch } from '../../features/filters/actions';
 import './style.css';
 
 const debounce = callback => {
@@ -14,18 +14,18 @@ const debounce = callback => {
   }
 }
 
-const ProductContainer = () => {
-  const products = useSelector(selectProducts());
-  const wishlistCount = useSelector(selectWishfulProductsCount);
+const ProductsList = props => {
+  const products = props.products;
   const history = useHistory();
   const dispatch = useDispatch();
+  const wishlistCount = useSelector(selectWishfulProductsCount);
 
   const onClick = () => {
     history.push("/wishlist");
   }
-
   const onInput = (event) => {
     dispatch(actionChangeSearch(event.target.value.trim()));
+    console.log("event", event.target.value)
   }
 
   const debouncedOnInput = debounce(onInput);
@@ -54,4 +54,4 @@ const ProductContainer = () => {
   )
 }
 
-export default ProductContainer;
+export default ProductsList;
