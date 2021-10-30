@@ -11,10 +11,10 @@ import {
 import './style.css';
 import { actionChangePage } from '../../features/pages/actions';
 
-const FiltersList = props => {
+const FiltersList = () => {
   const filters = useSelector(selectFilters).filters;
+  const range = useSelector(selectFilters).range;
   const dispatch = useDispatch();
-
   const categoryFilter = !!filters && filters.categories;
   const brandFilter = !!filters && filters.brands;
 
@@ -31,29 +31,40 @@ const FiltersList = props => {
   }
 
   return (
-    <form onSubmit={props.onSubmit} className="filter-form">
+    <div className="filter-form">
       <h2 className="filter-form__title">Filters
-        <button className="filter-form__submit-button" type="submit">&lt;&lt;</button>
+        <button className="filter-form__submit-button" type="text">&lt;&lt;</button>
       </h2>
       <div className="filter-form__list-wrapper">
-        <div className="filters">
-          <DoubleSlider />
-          <hr />
-          <FiltersGroup
-            title="Category"
-            filtersGroup={categoryFilter}
-            changeFilter={changeCategoryFilter} />
-          <hr />
-          <FiltersGroup
-            title="Brand"
-            filtersGroup={brandFilter}
-            changeFilter={changeBrandFilter} />
-        </div>
+        {!!filters
+          ? <div className="filters">
+            {!!range && <DoubleSlider />}
+            {!!categoryFilter.length &&
+              <>
+                <hr />
+                <FiltersGroup
+                  title="Category"
+                  filtersGroup={categoryFilter}
+                  changeFilter={changeCategoryFilter} />
+              </>
+            }
+            {!!brandFilter.length &&
+              <>
+                <hr />
+                <FiltersGroup
+                  title="Brand"
+                  filtersGroup={brandFilter}
+                  changeFilter={changeBrandFilter} />
+              </>
+            }
+          </div>
+          : <div>No Filters to show</div>
+        }
       </div>
       <ClearButton onClick={clearAllFilters}>
         Clear all filters
       </ClearButton>
-    </form>
+    </div>
   )
 }
 

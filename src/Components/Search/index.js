@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { actionChangeSearch } from '../../features/filters/actions';
 import './style.css';
 
-const Search = (props, ref) => {
+const Search = props => {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
@@ -13,7 +13,6 @@ const Search = (props, ref) => {
     event.preventDefault();
     dispatch(actionChangeSearch(value.trim()));
     setValue('');
-    console.log("submit", value)
   }
 
   return (

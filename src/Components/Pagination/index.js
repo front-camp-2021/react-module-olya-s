@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { actionChangePage } from '../../features/pages/actions';
-import { selectedPages } from '../../features/pages/selectors';
+import { selectPages } from '../../features/pages/selectors';
 import './style.css';
 
 const Pagination = () => {
   const dispatch = useDispatch();
-  const { totalPages, start, viewPages, currentPage } = useSelector(selectedPages);
+  const { totalPages, start, viewPages, currentPage } = useSelector(selectPages);
 
   const handlePointerDown = event => {
     if (event.target.classList.contains('pagination__link')) {

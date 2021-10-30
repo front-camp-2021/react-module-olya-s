@@ -25,7 +25,6 @@ const ProductsList = props => {
   }
   const onInput = (event) => {
     dispatch(actionChangeSearch(event.target.value.trim()));
-    console.log("event", event.target.value)
   }
 
   const debouncedOnInput = debounce(onInput);
@@ -45,9 +44,12 @@ const ProductsList = props => {
         </div>
         <Search onInput={onInput} debouncedOnInput={debouncedOnInput} />
         <div className="catalog">
-          {products && products.map(product => (
-            <Card key={product.id} product={product} />
-          ))}
+          {products && products.length
+            ? products.map(product => (
+              <Card key={product.id} product={product} />
+            ))
+            : <div>No products found</div>
+          }
         </div>
       </section>
     </div>

@@ -1,1 +1,1 @@
-export const selectedPages = state => state.pages;
+export const selectPages = state => state.pages;

@@ -7,13 +7,13 @@ import Pagination from '../Pagination';
 import { actionSetTotalPages } from '../../features/pages/actions';
 import { selectProducts } from '../../features/products/selectors';
 import { selectFilters } from '../../features/filters/selectors';
-import { selectedPages } from '../../features/pages/selectors';
+import { selectPages } from '../../features/pages/selectors';
 import './style.css';
 
 const MainContainer = () => {
   const products = useSelector(selectProducts());
   const { filters, search } = useSelector(selectFilters);
-  const pages = useSelector(selectedPages);
+  const pages = useSelector(selectPages);
   const dispatch = useDispatch();
   const [windowWidth, setWindowWidth] = useState(0);
   const pageSize = (windowWidth <= 635)

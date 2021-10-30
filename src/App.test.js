@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import FiltersList from './Components/FiltersList';
+import { Provider } from 'react-redux'
+import { store } from './app/store';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('With React Testing Library', () => {
+  it('should be rendered correctly', () => {
+    render(<Provider store={store}><App /></Provider>);
+    expect(screen.getByRole('heading', { name: /online store/i })).toBeInTheDocument();
+  });
 });

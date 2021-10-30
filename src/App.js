@@ -6,6 +6,7 @@ import Wishlist from './Components/Wishlist';
 import Cart from './Components/Cart';
 import NotFound from './Components/NotFound';
 import ProductPage from './Components/ProductPage';
+import { useDispatch } from 'react-redux';
 
 function App() {
   return (
