@@ -24,19 +24,18 @@ const Cart = () => {
   return (
     <>
       {cartlist.length
-        ? <div className="button-wrapper">
-          <ClearButton onClick={clearCart}>Clear Cart</ClearButton>
-        </div>
+        ? <>
+          <div className="button-wrapper">
+            <ClearButton onClick={clearCart}>Clear Cart</ClearButton>
+          </div>
+          <div className="cart">
+            {cartlist && cartlist.map(product => (
+              <CartItem key={product.id} product={product} countTotalPrice={countTotalPrice} />
+            ))}
+          </div>
+          <div>Total: {totalAmount}</div>
+        </>
         : <h2>No products in cart</h2>
-      }
-
-      <div className="cart">
-        {cartlist && cartlist.map(product => (
-          <CartItem key={product.id} product={product} countTotalPrice={countTotalPrice} />
-        ))}
-      </div>
-      {!!totalAmount &&
-        <div>Total: {totalAmount}</div>
       }
     </>
   )
