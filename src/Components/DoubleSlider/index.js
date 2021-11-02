@@ -46,7 +46,7 @@ class DoubleSlider extends React.Component {
           { ...state, shiftX: event.pageX - element.getBoundingClientRect().left }
         ));
       }
-      element.style.zIndex = 1000;
+      element.style.zIndex = '1000';
       this.setState((state) => ({ ...state, move: this.handlePointerMove }));
     }
   };
