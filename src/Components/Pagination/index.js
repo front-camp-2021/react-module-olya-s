@@ -156,19 +156,24 @@ const Pagination = () => {
   }
 
   return (
-    <div className="pagination" onPointerDown={handlePointerDown}>
-      <span className="pagination__item" data-element="prevPage">
-        {currentPage === 1 ? '<' :
-          <button className="pagination__link pagination__link_arrow">&lt;</button>}
-      </span>
-      <ul className="pagination__list">
-        {getPages()}
-      </ul>
-      <span className="pagination__item" data-element="nextPage">
-        {currentPage === totalPages ? '>' :
-          <button className="pagination__link pagination__link_arrow">&gt;</button>}
-      </span>
-    </div>
+    <>
+      {totalPages > 1
+        ? <div className="pagination" onPointerDown={handlePointerDown}>
+          <span className="pagination__item" data-element="prevPage">
+            {currentPage === 1 ? '<' :
+              <button className="pagination__link pagination__link_arrow">&lt;</button>}
+          </span>
+          <ul className="pagination__list">
+            {getPages()}
+          </ul>
+          <span className="pagination__item" data-element="nextPage">
+            {currentPage === totalPages ? '>' :
+              <button className="pagination__link pagination__link_arrow">&gt;</button>}
+          </span>
+        </div>
+        : ''
+      }
+    </>
   )
 }
 

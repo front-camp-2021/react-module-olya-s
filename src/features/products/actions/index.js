@@ -7,7 +7,6 @@ const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const CLEAR_WISHLIST = 'CLEAR_WISHLIST';
 const CLEAR_CART = 'CLEAR_CART';
-// const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 
 function actionGetProductSuccess(payload) {
   return { type: GET_PRODUCT, payload };
@@ -41,7 +40,8 @@ function actionGetProducts() {
           quantity: 0
         }));
         dispatch(actionGetProductsSuccess(completedData));
-      });
+      })
+      .catch(e => console.log(e));
   }
 }
 
@@ -65,10 +65,6 @@ function actionClearCart() {
   return { type: CLEAR_CART };
 }
 
-// function actionFilterProducts(payload) {
-//   return { type: FILTER_PRODUCTS, payload };
-// }
-
 export {
   GET_PRODUCT,
   GET_PRODUCTS,
@@ -77,13 +73,11 @@ export {
   REMOVE_FROM_CART,
   CLEAR_WISHLIST,
   CLEAR_CART,
-  // FILTER_PRODUCTS,
   actionGetProduct,
   actionGetProducts,
   actionChangeWishlistStatus,
   actionAddToCart,
   actionRemoveFromCart,
   actionClearWishlist,
-  actionClearCart,
-  // actionFilterProducts
+  actionClearCart
 };

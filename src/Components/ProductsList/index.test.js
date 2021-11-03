@@ -5,8 +5,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import ProductsList from './index.js';
 
-const { getByRole, getAllByRole } = screen;
-
 const initialState = {
   products: []
 }
@@ -48,5 +46,5 @@ describe('Products', () => {
       </Provider>
     );
     expect(screen.getByText('No products found')).toBeInTheDocument();
-  })
+  });
 });

@@ -12,4 +12,4 @@ describe('<Search /> tests', () => {
     expect(search).toBeInTheDocument();
     expect(search.value).toEqual('');
   })
-})
+});

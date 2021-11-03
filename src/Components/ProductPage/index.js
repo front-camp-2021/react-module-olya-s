@@ -19,9 +19,6 @@ const ProductPage = props => {
 
   return (
     <>
-      {/* {!!Object.keys(product).length
-        ? <Card product={product} />
-        : <Redirect to="/not-found" />} */}
       {product && !!Object.keys(product).length && <Card product={product} />}
     </>
   )

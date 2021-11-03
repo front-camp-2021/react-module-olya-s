@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const SET_FILTERS = 'SET_FILTERS';
+const SET_FILTERS_ERROR = 'SET_FILTERS_ERROR';
 const CHANGE_CATEGORY_FILTER = 'CHANGE_CATEGORY_FILTER';
 const CHANGE_BRAND_FILTER = 'CHANGE_BRAND_FILTER';
 const RESET_ALL_FILTERS = 'RESET_ALL_FILTERS';
@@ -11,35 +12,40 @@ function actionSetFiltersSuccess(payload) {
   return { type: SET_FILTERS, payload };
 }
 
+function actionSetFiltersError(payload) {
+  return { type: SET_FILTERS_ERROR, payload };
+}
+
 function actionSetFilters() {
   return dispatch => {
     const filters = { categories: [], brands: [] };
-    async function getCategories() {
-      return await axios.get('http://localhost:3001/categories')
+    function getCategories() {
+      return axios.get('http://localhost:3001/categories')
         .then(res => {
           const completedData = res.data.map(item => ({
             title: item,
             checked: false
           }));
           return completedData;
-        });
+        })
     }
-    async function getBrands() {
-      return await axios.get('http://localhost:3001/brands')
+    function getBrands() {
+      return axios.get('http://localhost:3001/brands')
         .then(res => {
           const completedData = res.data.map(item => ({
             title: item,
             checked: false
           }));
           return completedData;
-        });
+        })
     }
     Promise.all([getCategories(), getBrands()])
       .then(values => {
         filters.categories = values[0];
         filters.brands = values[1];
-        dispatch(actionSetFiltersSuccess(filters))
-      });
+        dispatch(actionSetFiltersSuccess(filters));
+      })
+      .catch(error => dispatch(actionSetFiltersError(error.message)));
   }
 }
 
@@ -65,6 +71,7 @@ function actionChangeSearch(payload) {
 
 export {
   SET_FILTERS,
+  SET_FILTERS_ERROR,
   CHANGE_CATEGORY_FILTER,
   CHANGE_BRAND_FILTER,
   RESET_ALL_FILTERS,

@@ -16,11 +16,8 @@ const MainContainer = () => {
   const pages = useSelector(selectPages);
   const dispatch = useDispatch();
   const [windowWidth, setWindowWidth] = useState(0);
-  const pageSize = (windowWidth <= 635)
-    ? 5 : (windowWidth <= 720)
-      ? 6 : (windowWidth <= 990)
-        ? 5 : (windowWidth <= 1200)
-          ? 6 : 9;
+  const pageSize = ((windowWidth <= 635) || (windowWidth > 720 && windowWidth <= 990)) ? 5 :
+    (windowWidth > 1200) ? 9 : 6;
 
   const resizeWindow = () => {
     setWindowWidth(window.innerWidth);
@@ -29,17 +26,43 @@ const MainContainer = () => {
   const getProducts = () => {
     let productsSearch = [];
     let res = [];
+    let categoryProducts = [];
+    let brandProducts = [];
+    let filteredProducts = [];
     const checkedFilters = {
       category: filters.categories.filter(f => f.checked).map(f => f.title),
       brand: filters.brands.filter(f => f.checked).map(f => f.title)
     };
-    const filteredProducts = products.filter(prod => (
-      checkedFilters.category.find(title => title.toLowerCase() === prod.category) ||
-      checkedFilters.brand.find(title => title.toLowerCase() === prod.brand)));
-    const productsToView = filteredProducts.length ? filteredProducts.slice() : products.slice();
-    if (!!search) {
-      productsSearch = productsToView.filter(prod => prod.title.toLowerCase().includes(search));
+    if (!checkedFilters.category.length && !checkedFilters.brand.length) {
+      filteredProducts = products.slice();
+    } else {
+      if (checkedFilters.category.length) {
+        categoryProducts = products.filter(prod => (
+          checkedFilters.category.find(title => title.toLowerCase() === prod.category.split('_').join(' '))
+        ));
+      }
+      if (checkedFilters.brand.length) {
+        brandProducts = products.filter(prod => (
+          checkedFilters.brand.find(title => title.toLowerCase() === prod.brand.split('_').join(' '))
+        ));
+      }
+      if (categoryProducts.length && brandProducts.length) {
+        filteredProducts = categoryProducts.filter(prodCategory => {
+          const products = brandProducts.filter(prodBrand => {
+            return prodCategory.id === prodBrand.id
+          })
+          return products.length;
+        });
+      } else if (categoryProducts.length && !checkedFilters.brand.length) {
+        filteredProducts = categoryProducts.slice();
+      } else if (brandProducts.length && !checkedFilters.category.length) {
+        filteredProducts = brandProducts.slice();
+      }
     }
+    if (!!search) {
+      productsSearch = filteredProducts.filter(prod => prod.title.toLowerCase().includes(search));
+    }
+    let productsToView = filteredProducts.slice();
     res = productsSearch.length
       ? productsSearch.splice(pages.currentPage * pageSize - pageSize, pageSize)
       : productsToView.splice(pages.currentPage * pageSize - pageSize, pageSize);
@@ -50,8 +73,7 @@ const MainContainer = () => {
 
   useEffect(() => {
     const filteredProducts = memoizedCallback().filteredProducts;
-    const productsToView = (filteredProducts.length && filteredProducts) || products;
-    dispatch(actionSetTotalPages(Math.ceil((productsToView.length) / pageSize)));
+    dispatch(actionSetTotalPages(Math.ceil((filteredProducts.length) / pageSize)));
     resizeWindow();
     window.addEventListener("resize", resizeWindow);
     return () => window.removeEventListener("resize", resizeWindow);
@@ -60,8 +82,7 @@ const MainContainer = () => {
   const onSubmit = event => {
     event.preventDefault();
     const filteredProducts = getProducts();
-    const productsToView = (filteredProducts.length && filteredProducts) || products;
-    dispatch(actionSetTotalPages(Math.ceil((productsToView.length) / pageSize)));
+    dispatch(actionSetTotalPages(Math.ceil((filteredProducts.length) / pageSize)));
   };
 
   // useEffect(() => {
