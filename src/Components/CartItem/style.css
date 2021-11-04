@@ -1,0 +1,40 @@
+
+.purchase {
+  padding: 10px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 150px 1fr 135px;
+  font-weight: 400;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.14);
+  border-radius: 8px; 
+}
+.purchase__image {
+  padding: 10px;
+}
+.purchase__image img {  
+  height: 100px;
+}
+.purchase__body {
+  padding: 10px;
+}
+.purchase__amount {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.purchase__count button {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+.purchase__count button[disabled] {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.purchase__count button:not([disabled]):hover {
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
+}
