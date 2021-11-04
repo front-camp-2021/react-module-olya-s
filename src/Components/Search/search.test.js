@@ -11,5 +11,5 @@ describe('<Search /> tests', () => {
     const search = getByRole('textbox', { name: '' });
     expect(search).toBeInTheDocument();
     expect(search.value).toEqual('');
-  })
+  });
 });

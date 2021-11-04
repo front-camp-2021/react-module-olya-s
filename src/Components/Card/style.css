@@ -52,10 +52,12 @@
   font-weight: 400;
   font-size: 1.2rem;
   overflow: hidden;
+  overflow-wrap: anywhere;
 }
 .card__text {
   font-size: 0.9rem;
   overflow: hidden;
+  overflow-wrap: anywhere;
 }
 .card__footer {
   display: flex;

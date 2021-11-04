@@ -67,17 +67,17 @@ const doubleSlider = {
 const filtersInitialState = {
   filters: {
     categories: [],
-    brands: [],
-    error: ''
+    brands: []
   },
   range: { ...doubleSlider, reset: false },
-  search: ''
+  search: '',
+  error: ''
 };
 
 export function filters(state = filtersInitialState, action) {
   switch (action.type) {
     case SET_FILTERS:
-      return { ...state, filters: action.payload };
+      return { ...state, filters: action.payload, error: '' };
     case SET_FILTERS_ERROR:
       return { ...state, error: action.payload };
     case CHANGE_CATEGORY_FILTER:
